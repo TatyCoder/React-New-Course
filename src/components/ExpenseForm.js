@@ -3,24 +3,42 @@ import { useState } from 'react';
 
 const ExpenseForm = () => {
     // I can have multiple states inside of the same component, managing and updating them separately:
-    const [enteredTitle, setEnteredTitle] = useState('');  // Storing empty strings*
-    const [enteredAmount, setEnteredAmount] = useState('');
-    const [enteredDate, setEnteredDate] = useState('');
+    // const [enteredTitle, setEnteredTitle] = useState('');  
+    // const [enteredAmount, setEnteredAmount] = useState('');
+    // const [enteredDate, setEnteredDate] = useState('');
+
+    // Using one state instead, passing in an object as a value, grouping the 3 states and updating all 3 properties:
+    const [userInput, setUserInput] = useState({
+        enteredTitle: '',
+        enteredAmount: '',
+        enteredDate: ''
+    });
 
     const titleChangeHandler = (event) => {
-        setEnteredTitle(event.target.value);  
-        // This value property holds the current value of this input at the point of time this event occurs.
-        console.log(enteredTitle);
+        // setEnteredTitle(event.target.value);  
+
+        // Now calling the setUserInput passing in a new object*.
+        // I need to use the spread operator to copy the other two key value pairs which I'm not updating here:
+        setUserInput({
+            ...userInput, 
+            enteredTitle: event.target.value,
+        });
     };
 
     const amountChangeHandler = (event) => {
-        setEnteredAmount(event.target.value);
-        console.log(enteredAmount);
+        // setEnteredAmount(event.target.value);
+        setUserInput({
+            ...userInput,
+            enteredAmount: event.target.value,
+        });
     };
 
     const dateChangeHandler = (event) => {
-        setEnteredDate(event.target.value);
-        console.log(enteredDate);
+        // setEnteredDate(event.target.value);
+        setUserInput({
+            ...userInput,
+            enteredDate: event.target.value,
+        });
     };
 
     return <form>
@@ -46,6 +64,5 @@ const ExpenseForm = () => {
 
 export default ExpenseForm;
 
-/* Notes: *I'm storing empty strings all the time because by default, whenever I listen to the 
-change event for an input, if I read the value of that input element, it'll always be a string. 
-Even if it stores a number it will be a number as a string and the same for the date. */
+/* Notes: *the way I'm updating my state here is not entirely correct, it could fail because I'm depending on 
+my previous state for updating the state. I should call the setUserInput function and pass a function to it. */
