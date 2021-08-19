@@ -17,11 +17,16 @@ const ExpenseForm = () => {
     const titleChangeHandler = (event) => {
         // setEnteredTitle(event.target.value);  
 
-        // Now calling the setUserInput passing in a new object*.
+        // Now calling the setUserInput passing in a new object.
         // I need to use the spread operator to copy the other two key value pairs which I'm not updating here:
-        setUserInput({
-            ...userInput, 
-            enteredTitle: event.target.value,
+        // setUserInput({
+        //     ...userInput, 
+        //     enteredTitle: event.target.value,
+        // });
+
+        // Passing a function to setUserInput*:
+        setUserInput((prevState) => {
+            return { ...prevState, enteredTitle: event.target.value }
         });
     };
 
@@ -64,5 +69,9 @@ const ExpenseForm = () => {
 
 export default ExpenseForm;
 
-/* Notes: *the way I'm updating my state here is not entirely correct, it could fail because I'm depending on 
-my previous state for updating the state. I should call the setUserInput function and pass a function to it. */
+/* Notes: *whenever I update my state and it depends on the previous state, I 
+should call the setUserInput function and pass a function to it. This function 
+will automatically be executed by React and it will receive the previous state 
+snapshot for that state for which I'm calling the updating function. With this  
+approach, React will guarantee that the state snapshot it gives me in this inner 
+function, will always be the latest state snapshot. */
