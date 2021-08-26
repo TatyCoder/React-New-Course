@@ -1,8 +1,8 @@
 import './ExpenseForm.css';
 import { useState } from 'react';
 
-// Switching back to the multiple states approach:
-const ExpenseForm = () => {
+// Now I expect to get some props because I set that prop (in NewExpense.js):
+const ExpenseForm = (props) => {
     // I can have multiple states inside of the same component, managing and updating them separately:
     const [enteredTitle, setEnteredTitle] = useState('');  
     const [enteredAmount, setEnteredAmount] = useState('');
@@ -58,7 +58,9 @@ const ExpenseForm = () => {
             date: new Date(enteredDate) // Dates are tricky**
         };
 
-        console.log(expenseData);
+        // Here instead of logging my expenseData, I will access props onSaveExpenseData and execute it here:
+        // console.log(expenseData);
+        props.onSaveExpenseData(expenseData); // Passing the expenseData as an argument.
 
         // When the form is submitted I call these, setting them back to an empty string which is the initial state, to clear the inputs:
         setEnteredTitle('');
@@ -116,4 +118,4 @@ string and converted into a date object.
 *** two-way binding simply means that for inputs I don't just listen to 
 changes, but I can also pass a new value back into the input. This way  
 I feed the state back into the input so that when I change the state, 
-I also change the input.*/
+I also change the input. */

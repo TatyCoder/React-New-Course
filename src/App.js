@@ -2,6 +2,8 @@
 import Expenses from './components/Expenses';
 import NewExpense from './components/NewExpense';
 
+// The goal will be to add the new expense which the user entered to this list of existing expenses.
+// So, I need to pass the data which I'm collecting and generating in ExpenseForm to the app component:
 const App = () => {
   const expenses = [
     {
@@ -30,9 +32,16 @@ const App = () => {
     },
   ];
 
+  // Adding a new function:
+  const addExpenseHandler = expense => {
+    console.log('In App.js');  // To confirm that the data arrived, I will not update the expenses array yet.
+    console.log(expense);
+  };
+
+  // Adding a new prop (name of my choice, starting with on...) to NewExpense:
   return (
     <div>
-      <NewExpense />
+      <NewExpense onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
     </div>
   );
