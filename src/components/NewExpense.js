@@ -11,7 +11,7 @@ const NewExpense = (props) => {
 
         // Here instead of logging my expenseData, I will access props onAddExpense and execute it here:
         // console.log(expenseData);
-        props.onAddExpense(expenseData);  // Passing the generated expenseData as an argument.
+        props.onAddExpense(expenseData);  // Passing the generated expenseData as an argument**.
     };
 
     // Adding the new prop (name of my choice, starting with on...) to ExpenseForm*:
@@ -33,4 +33,10 @@ and that's how I can communicate up: from child to parent.
 So it's this function defined here in the NewExpense component which I'll 
 now execute in a different component, inside of ExpenseForm to be precise. 
 And I can execute the function even though it's not defined inside of 
-ExpenseForm because I'm passing a pointer through the onSaveExpenseData. */
+ExpenseForm because I'm passing a pointer through the onSaveExpenseData. 
+** By passing data to that function I'm lifting that data, that state up. 
+I'm not keeping expenseData here in the NewExpense component, instead I'm 
+lifting it up to the App component so I can use it there or I can pass the   
+data down to another component via props. The Expenses component is the 
+component where I need the data in the end, so it is the App component 
+where I wanna lift the state up to. */
