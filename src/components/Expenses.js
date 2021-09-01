@@ -17,7 +17,21 @@ const Expenses = (props) => {
         return expense.date.getFullYear().toString() === filteredYear;
     });
 
-    // To render content conditionally:
+    // Another way to render content conditionally, adding a new variable:
+    let expensesContent = <p>No expenses found!</p>;
+
+    if (filteredExpenses.length > 0) {
+        expensesContent = filteredExpenses.map((expense) => (
+            <ExpenseItem
+            key={expense.id}
+            title={expense.title} 
+            amount={expense.amount} 
+            date={expense.date}
+            />
+        ));
+    }
+
+    // Now I get a lean JSX snippet:
     return (
         <div>
             <Card className="expenses">
@@ -25,18 +39,7 @@ const Expenses = (props) => {
                     onSelected={filteredYear} 
                     onYearFilter={selectYearHandler}
                 />
-                {filteredExpenses.length === 0 ? (
-                    <p>No expenses found!</p>
-                ) : (
-                    filteredExpenses.map((expense) => (
-                        <ExpenseItem
-                        key={expense.id}
-                        title={expense.title} 
-                        amount={expense.amount} 
-                        date={expense.date}
-                        />
-                    ))
-                )}
+                {expensesContent}
             </Card>
         </div>
     );
