@@ -8,12 +8,16 @@ const Expenses = (props) => {
     const [filteredYear, setFilteredYear] = useState('2020');
 
     const selectYearHandler = (selectedYear) => {
-        console.log('In Expenses.js');
         console.log(selectedYear);
         setFilteredYear(selectedYear);
     };
 
-    // To render the list dynamically using map() and getting rid of the hard coded ExpenseItems here:
+    // To filter de expenses by year using filter():
+    const filteredExpenses = props.items.filter(expense => {
+        return expense.date.getFullYear().toString() === filteredYear;
+    });
+
+    // To render the list of the filteredExpenses:
     return (
         <div>
             <Card className="expenses">
@@ -21,7 +25,7 @@ const Expenses = (props) => {
                     onSelected={filteredYear} 
                     onYearFilter={selectYearHandler}
                 />
-                {props.items.map((expense) => (
+                {filteredExpenses.map((expense) => (
                     <ExpenseItem
                         key={expense.id}
                         title={expense.title} 
@@ -29,26 +33,6 @@ const Expenses = (props) => {
                         date={expense.date}
                     />
                 ))}
-                {/* <ExpenseItem
-                    title={props.items[0].title}
-                    amount={props.items[0].amount}
-                    date={props.items[0].date}
-                ></ExpenseItem>
-                <ExpenseItem
-                    title={props.items[1].title}
-                    amount={props.items[1].amount}
-                    date={props.items[1].date}
-                ></ExpenseItem>
-                <ExpenseItem
-                    title={props.items[2].title}
-                    amount={props.items[2].amount}
-                    date={props.items[2].date}
-                ></ExpenseItem>
-                <ExpenseItem
-                    title={props.items[3].title}
-                    amount={props.items[3].amount}
-                    date={props.items[3].date}
-                ></ExpenseItem> */}
             </Card>
         </div>
     );
@@ -61,4 +45,6 @@ transforms every element in that original array. So map() takes a function
 as a argument, and that function executes for every element in the array, 
 and the result of this function is the element which will be added to the 
 newly created array. With this map expression here it transforms the array  
-to an array full of JSX items. Always add key when mapping out lists of items.*/
+to an array full of JSX items. Always add key when mapping out lists of items.
+filter() returns a new array without touching the original array, and in that 
+new array I either keep or remove items. */
