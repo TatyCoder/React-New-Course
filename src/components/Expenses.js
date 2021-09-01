@@ -17,7 +17,7 @@ const Expenses = (props) => {
         return expense.date.getFullYear().toString() === filteredYear;
     });
 
-    // To render the list of the filteredExpenses:
+    // To render content conditionally:
     return (
         <div>
             <Card className="expenses">
@@ -25,14 +25,18 @@ const Expenses = (props) => {
                     onSelected={filteredYear} 
                     onYearFilter={selectYearHandler}
                 />
-                {filteredExpenses.map((expense) => (
-                    <ExpenseItem
+                {filteredExpenses.length === 0 ? (
+                    <p>No expenses found!</p>
+                ) : (
+                    filteredExpenses.map((expense) => (
+                        <ExpenseItem
                         key={expense.id}
                         title={expense.title} 
                         amount={expense.amount} 
                         date={expense.date}
-                    />
-                ))}
+                        />
+                    ))
+                )}
             </Card>
         </div>
     );
@@ -47,4 +51,5 @@ and the result of this function is the element which will be added to the
 newly created array. With this map expression here it transforms the array  
 to an array full of JSX items. Always add key when mapping out lists of items.
 filter() returns a new array without touching the original array, and in that 
-new array I either keep or remove items. */
+new array I either keep or remove items. 
+Conditional content is about rendering different output under different conditions. */
