@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import ExpenseItem from './ExpenseItem';
+// import ExpenseItem from './ExpenseItem';  // Here I don't need this anymore.
 import Card from './Card';
 import ExpensesFilter from './ExpensesFilter';
 import './Expenses.css';
+import ExpensesList from './ExpensesList';  // Here I now import this.
 
 const Expenses = (props) => {
     const [filteredYear, setFilteredYear] = useState('2020');
@@ -12,26 +13,13 @@ const Expenses = (props) => {
         setFilteredYear(selectedYear);
     };
 
-    // To filter de expenses by year using filter():
     const filteredExpenses = props.items.filter(expense => {
         return expense.date.getFullYear().toString() === filteredYear;
     });
 
-    // Another way to render content conditionally, adding a new variable:
-    let expensesContent = <p>No expenses found!</p>;
-
-    if (filteredExpenses.length > 0) {
-        expensesContent = filteredExpenses.map((expense) => (
-            <ExpenseItem
-            key={expense.id}
-            title={expense.title} 
-            amount={expense.amount} 
-            date={expense.date}
-            />
-        ));
-    }
-
-    // Now I get a lean JSX snippet:
+    // For restructuring I removed the variable expensesContent from here.
+    // Here I now wanna output my ExpensesList instead of expensesContent, and the filteredExpenses 
+    // should now be passed to ExpensesList through the items prop:
     return (
         <div>
             <Card className="expenses">
@@ -39,20 +27,10 @@ const Expenses = (props) => {
                     onSelected={filteredYear} 
                     onYearFilter={selectYearHandler}
                 />
-                {expensesContent}
+                <ExpensesList items={filteredExpenses} />
             </Card>
         </div>
     );
 }
 
 export default Expenses;
-
-/* Notes: map() creates a new array based on another array, so it basically 
-transforms every element in that original array. So map() takes a function 
-as a argument, and that function executes for every element in the array, 
-and the result of this function is the element which will be added to the 
-newly created array. With this map expression here it transforms the array  
-to an array full of JSX items. Always add key when mapping out lists of items.
-filter() returns a new array without touching the original array, and in that 
-new array I either keep or remove items. 
-Conditional content is about rendering different output under different conditions. */
