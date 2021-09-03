@@ -1,8 +1,12 @@
 import ExpenseForm from './ExpenseForm';
 import './NewExpense.css';
+import { useState } from 'react';
 
-// To pass the expenseData to NewExpense by adding a new prop*:
+// To pass the expenseData to NewExpense by adding a new prop*.
+// Adding a new state here which should be conditionally render on the screen:
 const NewExpense = (props) => {
+    const [isEditing, setIsEditing] = useState(false);
+
     const saveExpenseDataHandler = (enteredExpenseData) => {
         const expenseData = {  
             ...enteredExpenseData,  // To copy the object which I generate into submitHandler.
@@ -12,11 +16,31 @@ const NewExpense = (props) => {
         // Here instead of logging my expenseData, I will access props onAddExpense and execute it here:
         // console.log(expenseData);
         props.onAddExpense(expenseData);  // Passing the generated expenseData as an argument**.
+        setIsEditing(false);  // To close the form if it's submitted.
     };
 
-    // Adding the new prop (name of my choice, starting with on...) to ExpenseForm*:
+    // Adding a new function which should be trigger when the 'Add New Expense' button is clicked:
+    const startEditingHandler = () => {
+        setIsEditing(true);
+    };
+
+    // Adding a new function which should be trigger when the 'Cancel' button is clicked:
+    const stopEditingHandler = () => {
+        setIsEditing(false);
+    };
+
+    // Adding the new prop (name of my choice, starting with on...) to ExpenseForm*.
+    // Now I want to render this form conditionally, sometimes instead of the form I'll show this  
+    // new button, using the IsEditing state to control which of the two elements is shown,  
+    // if isEditing is false I'll show the button and if it's true I'll show the form:
     return <div className="new-expense">
-        <ExpenseForm onSaveExpenseData={saveExpenseDataHandler}/>
+        {!isEditing && <button onClick={startEditingHandler}>Add New Expense</button>}
+        {isEditing && (
+            <ExpenseForm 
+                onSaveExpenseData={saveExpenseDataHandler}
+                onCancel={stopEditingHandler}
+            />
+        )}
     </div>
 };
 
