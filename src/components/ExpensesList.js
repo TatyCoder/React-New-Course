@@ -1,5 +1,5 @@
 // Now I need to import these here:
-import ExpenseItem from "./ExpenseItem";
+import ExpenseItem from './ExpenseItem';
 import './ExpensesList.css';
 
 // Creating a new const and copying the variable expensesContent from Expenses component:

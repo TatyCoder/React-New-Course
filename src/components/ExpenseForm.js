@@ -54,7 +54,7 @@ const ExpenseForm = (props) => {
         // To create an object that combines all the entered data:
         const expenseData = {
             title: enteredTitle,
-            amount: enteredAmount,
+            amount: +enteredAmount,  // When adding multiple values they are added as strings instead of numbers. Fixing it here by enforcing a number conversion (with +).
             date: new Date(enteredDate) // Dates are tricky**
         };
 
